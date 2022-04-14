@@ -1,5 +1,4 @@
-from get_length import get_length
-
+from math import *
 import requests
 
 API_KEY = '41a969a7-944b-4d7c-928e-c8de5e4710c5'
@@ -19,6 +18,15 @@ def geocode(address):
                 request=geocoder_request, status=response.status_code, reason=response.reason))
     features = json_response["response"]["GeoObjectCollection"]["featureMember"]
     return features[0]["GeoObject"] if features else None
+
+
+def get_length(coord1, coord2):
+    a1 = radians(coord1[0])
+    b1 = radians(coord1[1])
+    a2 = radians(coord2[0])
+    b2 = radians(coord2[1])
+    angle = acos(sin(a1) * sin(a2) + cos(a1) * cos(a2) * cos(b2 - b1))
+    return 6371000 * angle
 
 
 def dist(obj1, obj2):
